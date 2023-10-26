@@ -35,10 +35,16 @@ public class PlayerHealth : MonoBehaviour
         }
         Debug.Log(vida);
     }
+    
     private void Respawn()
     {
         Transform nuevoTransform = respawnPoint.getLastRespawnPoint();  
         transform.position = nuevoTransform.position;
+        if (vida <= 0)
+        {
+            vida = vidaMaxima;
+            UIBarraVida.SetVida(vida);
+        }
         //transform.position = respawnPoint.getLastRespawnPoint().position;
     }
 }

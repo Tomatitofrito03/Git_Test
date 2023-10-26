@@ -53,19 +53,28 @@ public class Movement : MonoBehaviour
 
         //estaEnElSuelo();
         if (movimientoVertical > 0f && estaEnElSuelo())
-            rb.AddForce(new Vector2(0, fuerzaSalto));
+            rb.velocity = new Vector2(0, fuerzaSalto);
 
         if (movimientoHorizontal != 0f)
         {
             animator.SetBool("estaCorriendo", true);
-            audioSource.Play();
+            sonidocorrer();
+
         }
         else
         {
             animator.SetBool("estaCorriendo" , false);
             audioSource.Stop();
+
         }
-        
+        if (movimientoVertical != 0f)
+        {
+            animator.SetBool("estaSaltando", true);
+        }
+        else
+        {
+            animator.SetBool("estaSaltando", false);
+        }
     }
 
     private void FixedUpdate() // se llama sí o sí 100 veces por segundo se llama también a las funciones de la física
@@ -73,6 +82,14 @@ public class Movement : MonoBehaviour
         //rb.AddForce(new Vector2(movimientoHorizontal , 0) * movementSpeed);//
         rb.velocity = new Vector2(movimientoHorizontal * movementSpeed,rb.velocity.y);
 
+    }
+
+    private void sonidocorrer()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
     }
 
     private void Flip()
